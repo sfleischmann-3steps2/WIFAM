@@ -47,7 +47,7 @@
       height: 100dvh;
     }
 
-    /* HEADER */
+    /* ── HEADER ── */
     header {
       background: var(--white);
       height: 64px;
@@ -59,121 +59,60 @@
       position: relative;
       z-index: 1000;
     }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 0.85rem;
-    }
-
+    .brand { display: flex; align-items: center; gap: 0.85rem; }
     .brand-icon svg { display: block; }
-
-    .brand-text {
-      display: flex;
-      flex-direction: column;
-      line-height: 1;
-    }
-
+    .brand-text { display: flex; flex-direction: column; line-height: 1; }
     .brand-name {
       font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 800;
-      font-size: 0.78rem;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--black);
-      line-height: 1.2;
-    }
-
-    .brand-tagline {
-      font-size: 0.62rem;
-      color: var(--grey-text);
-      letter-spacing: 0.04em;
-      margin-top: 2px;
+      font-weight: 800; font-size: 0.78rem;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--black); line-height: 1.2;
     }
 
     .header-center {
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
+      position: absolute; left: 50%; transform: translateX(-50%);
+      display: flex; align-items: center; gap: 0.6rem;
     }
-
     .jubilee-badge {
-      background: var(--magenta);
-      color: var(--white);
+      background: var(--magenta); color: var(--white);
       font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 800;
-      font-size: 1.1rem;
-      letter-spacing: 0.04em;
-      padding: 0.2rem 0.75rem;
-      border-radius: 2px;
+      font-weight: 800; font-size: 1.1rem;
+      letter-spacing: 0.04em; padding: 0.2rem 0.75rem; border-radius: 2px;
     }
-
     .jubilee-label {
-      font-size: 0.72rem;
-      font-weight: 500;
-      color: var(--grey-text);
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
+      font-size: 0.72rem; font-weight: 500; color: var(--grey-text);
+      letter-spacing: 0.05em; text-transform: uppercase;
     }
-
     .header-right {
-      font-size: 0.72rem;
-      color: var(--grey-text);
-      text-align: right;
-      line-height: 1.4;
+      font-size: 0.72rem; color: var(--grey-text);
+      text-align: right; line-height: 1.4;
     }
 
-    /* FILTERBAR */
+    /* ── FILTERBAR ── */
     .filterbar {
       background: var(--grey-light);
       border-bottom: 1px solid var(--border);
       padding: 0.55rem 1.75rem;
-      display: flex;
-      align-items: center;
-      gap: 0.45rem;
-      flex-wrap: wrap;
+      display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;
       z-index: 999;
     }
-
     .filter-label {
-      font-size: 0.68rem;
-      font-weight: 600;
-      color: var(--grey-text);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      margin-right: 0.3rem;
-      flex-shrink: 0;
+      font-size: 0.68rem; font-weight: 600; color: var(--grey-text);
+      letter-spacing: 0.1em; text-transform: uppercase;
+      margin-right: 0.3rem; flex-shrink: 0;
     }
 
     .chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
-      padding: 0.3rem 0.8rem;
-      border-radius: 100px;
+      display: inline-flex; align-items: center; gap: 0.3rem;
+      padding: 0.3rem 0.8rem; border-radius: 100px;
       border: 1.5px solid var(--border);
-      font-family: 'Barlow', sans-serif;
-      font-size: 0.76rem;
-      font-weight: 500;
-      cursor: pointer;
-      background: var(--white);
-      color: var(--grey-text);
-      transition: all 0.15s ease;
-      user-select: none;
-      -webkit-user-select: none;
+      font-family: 'Barlow', sans-serif; font-size: 0.76rem; font-weight: 500;
+      cursor: pointer; background: var(--white); color: var(--grey-text);
+      transition: all 0.15s ease; user-select: none;
       box-shadow: 0 1px 3px rgba(0,0,0,0.06);
     }
-
     .chip:active { transform: scale(0.96); }
-
-    .chip-dot {
-      width: 7px; height: 7px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
+    .chip-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
 
     .chip[data-cat="bauprojekt"]    .chip-dot { background: var(--c-bauprojekt); }
     .chip[data-cat="erschliessung"] .chip-dot { background: var(--c-erschliessung); }
@@ -186,333 +125,217 @@
     .chip.active[data-cat="event"]         { background: var(--c-event);         border-color: var(--c-event);         color: white; }
     .chip.active[data-cat="foerderung"]    { background: var(--c-foerderung);    border-color: var(--c-foerderung);    color: white; }
     .chip.active[data-cat="netzwerk"]      { background: var(--c-netzwerk);      border-color: var(--c-netzwerk);      color: white; }
-
     .chip.active .chip-dot { background: rgba(255,255,255,0.5); }
+    .chip-count { font-size: 0.62rem; font-weight: 600; opacity: 0.7; }
 
-    .chip-count {
-      font-size: 0.62rem;
-      font-weight: 600;
-      opacity: 0.7;
+    /* Style switcher */
+    .style-switcher {
+      margin-left: auto;
+      display: flex; gap: 0.3rem; align-items: center;
     }
+    .style-switcher .style-label {
+      font-size: 0.62rem; color: var(--grey-text); margin-right: 0.2rem;
+      font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em;
+    }
+    .style-btn {
+      padding: 0.2rem 0.55rem; border-radius: 4px;
+      border: 1px solid var(--border); background: var(--white);
+      font-family: 'Barlow', sans-serif; font-size: 0.65rem;
+      cursor: pointer; color: var(--grey-text); transition: all 0.15s;
+    }
+    .style-btn.active { background: var(--black); color: white; border-color: var(--black); }
 
-    /* MAP */
+    /* ── MAP ── */
     #map-wrap {
       position: relative;
       overflow: hidden;
       background: #e8e0d8;
     }
-
     #map { width: 100%; height: 100%; }
 
-    .leaflet-tile { filter: saturate(60%) brightness(106%) sepia(10%); }
+    /* Custom tile styles applied via CSS filters */
+    .tile-style-elegant .leaflet-tile {
+      filter: saturate(30%) brightness(108%) contrast(95%) sepia(15%);
+    }
+    .tile-style-light .leaflet-tile {
+      filter: saturate(15%) brightness(112%) contrast(90%);
+    }
+    .tile-style-default .leaflet-tile {
+      filter: saturate(60%) brightness(106%) sepia(10%);
+    }
 
     .leaflet-control-zoom {
       border: none !important;
       box-shadow: 0 2px 10px rgba(0,0,0,0.15) !important;
-      border-radius: 6px !important;
-      overflow: hidden;
+      border-radius: 6px !important; overflow: hidden;
     }
     .leaflet-control-zoom a {
-      width: 38px !important; height: 38px !important;
-      line-height: 38px !important;
+      width: 44px !important; height: 44px !important;
+      line-height: 44px !important;
       background: white !important; color: var(--black) !important;
       border: none !important;
       border-bottom: 1px solid var(--border) !important;
-      font-size: 1.2rem !important; font-weight: 300 !important;
+      font-size: 1.4rem !important; font-weight: 300 !important;
     }
     .leaflet-control-zoom a:hover { background: var(--grey-light) !important; }
     .leaflet-control-attribution { font-size: 0.6rem !important; }
 
-    /* CUSTOM MARKER */
+    /* ── CUSTOM MARKER ── */
     .pin-wrap {
-      position: relative;
-      width: 32px; height: 40px;
+      position: relative; width: 36px; height: 44px;
       cursor: pointer;
       transition: transform 0.18s cubic-bezier(0.34,1.56,0.64,1);
       transform-origin: bottom center;
     }
-
     .pin-wrap:hover, .pin-wrap.active {
       transform: scale(1.3) translateY(-4px);
     }
-
     .pin-head {
-      width: 28px; height: 28px;
+      width: 32px; height: 32px;
       border-radius: 50% 50% 50% 0;
       transform: rotate(-45deg);
       border: 2.5px solid rgba(255,255,255,0.9);
       box-shadow: 0 3px 12px rgba(0,0,0,0.3), 0 1px 4px rgba(0,0,0,0.2);
-      position: absolute;
-      top: 0; left: 2px;
+      position: absolute; top: 0; left: 2px;
     }
-
     .pin-icon {
-      position: absolute;
-      top: 4px; left: 6px;
-      font-size: 0.85rem;
+      position: absolute; top: 5px; left: 7px;
+      font-size: 0.95rem;
       transform: rotate(45deg);
       line-height: 1;
     }
 
-    /* DETAIL PANEL */
+    /* ── DETAIL PANEL ── */
     #panel {
-      position: absolute;
-      top: 0; right: 0;
-      width: 420px;
-      max-width: 90vw;
-      height: 100%;
+      position: absolute; top: 0; right: 0;
+      width: 420px; max-width: 90vw; height: 100%;
       background: var(--white);
       box-shadow: -6px 0 30px rgba(0,0,0,0.14);
       z-index: 800;
-      display: flex;
-      flex-direction: column;
+      display: flex; flex-direction: column;
       transform: translateX(110%);
       transition: transform 0.38s cubic-bezier(0.4,0,0.2,1);
       pointer-events: none;
     }
-
-    #panel.open {
-      transform: translateX(0);
-      pointer-events: all;
-    }
+    #panel.open { transform: translateX(0); pointer-events: all; }
 
     .panel-header-img {
-      width: 100%;
-      height: 220px;
-      object-fit: cover;
-      flex-shrink: 0;
-      display: block;
+      width: 100%; height: 220px;
+      object-fit: cover; flex-shrink: 0; display: block;
     }
-
     .panel-img-placeholder {
-      width: 100%;
-      height: 220px;
+      width: 100%; height: 220px;
       background: linear-gradient(135deg, var(--grey-light) 0%, var(--grey-mid) 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      border-bottom: 1px solid var(--border);
-      position: relative;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; border-bottom: 1px solid var(--border); position: relative;
     }
-
-    .panel-img-placeholder .placeholder-icon {
-      font-size: 3rem;
-      opacity: 0.4;
-    }
-
+    .panel-img-placeholder .placeholder-icon { font-size: 3rem; opacity: 0.4; }
     .panel-img-placeholder .placeholder-text {
-      position: absolute;
-      bottom: 0.75rem;
-      right: 0.75rem;
-      font-size: 0.65rem;
-      color: var(--grey-text);
-      opacity: 0.6;
+      position: absolute; bottom: 0.75rem; right: 0.75rem;
+      font-size: 0.65rem; color: var(--grey-text); opacity: 0.6;
     }
-
-    .panel-cat-strip {
-      height: 4px;
-      flex-shrink: 0;
-    }
-
+    .panel-cat-strip { height: 4px; flex-shrink: 0; }
     .panel-body {
-      flex: 1;
-      overflow-y: auto;
+      flex: 1; overflow-y: auto;
       padding: 1.5rem 1.75rem 2rem;
       -webkit-overflow-scrolling: touch;
     }
-
     .panel-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      font-size: 0.68rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      margin-bottom: 0.65rem;
+      display: inline-flex; align-items: center; gap: 0.35rem;
+      font-size: 0.68rem; font-weight: 600;
+      letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.65rem;
     }
-
-    .panel-badge-dot {
-      width: 8px; height: 8px;
-      border-radius: 50%;
-    }
-
+    .panel-badge-dot { width: 8px; height: 8px; border-radius: 50%; }
     .panel-title {
       font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 800;
-      font-size: 1.65rem;
-      line-height: 1.15;
-      color: var(--black);
-      text-transform: uppercase;
-      letter-spacing: 0.02em;
-      margin-bottom: 0.15rem;
+      font-weight: 800; font-size: 1.65rem; line-height: 1.15;
+      color: var(--black); text-transform: uppercase;
+      letter-spacing: 0.02em; margin-bottom: 0.15rem;
     }
-
     .panel-subtitle {
-      font-size: 0.85rem;
-      color: var(--grey-text);
-      font-weight: 400;
-      margin-bottom: 0.3rem;
+      font-size: 0.85rem; color: var(--grey-text); font-weight: 400; margin-bottom: 0.3rem;
     }
-
     .panel-year {
-      font-size: 0.8rem;
-      color: var(--grey-text);
-      margin-bottom: 1.1rem;
-      font-weight: 400;
+      font-size: 0.8rem; color: var(--grey-text); margin-bottom: 1.1rem; font-weight: 400;
     }
-
     .panel-status {
-      display: inline-block;
-      font-size: 0.65rem;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      padding: 0.15rem 0.5rem;
-      border-radius: 3px;
-      margin-left: 0.5rem;
+      display: inline-block; font-size: 0.65rem; font-weight: 600;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 0.15rem 0.5rem; border-radius: 3px; margin-left: 0.5rem;
     }
-
     .panel-status.abgeschlossen { background: #dcfce7; color: #166534; }
     .panel-status.laufend       { background: #dbeafe; color: #1e40af; }
     .panel-status.geplant       { background: #fef3c7; color: #92400e; }
-
     .panel-divider {
-      width: 40px; height: 3px;
-      background: var(--magenta);
-      margin-bottom: 1.1rem;
-      border-radius: 2px;
+      width: 40px; height: 3px; background: var(--magenta);
+      margin-bottom: 1.1rem; border-radius: 2px;
     }
-
     .panel-text {
-      font-size: 0.88rem;
-      line-height: 1.72;
-      color: #333;
-      margin-bottom: 1rem;
+      font-size: 0.88rem; line-height: 1.72; color: #333; margin-bottom: 1rem;
     }
-
     .panel-facts {
-      background: var(--grey-light);
-      border-left: 3px solid var(--magenta);
-      padding: 0.7rem 1rem;
-      font-size: 0.8rem;
-      color: var(--black);
-      line-height: 1.5;
-      margin-bottom: 1.2rem;
-      border-radius: 0 4px 4px 0;
+      background: var(--grey-light); border-left: 3px solid var(--magenta);
+      padding: 0.7rem 1rem; font-size: 0.8rem; color: var(--black);
+      line-height: 1.5; margin-bottom: 1.2rem; border-radius: 0 4px 4px 0;
     }
-
-    .panel-facts-label {
-      font-size: 0.65rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--grey-text);
-      margin-bottom: 0.25rem;
+    .panel-facts-label, .panel-partners-label {
+      font-size: 0.65rem; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.1em; color: var(--grey-text); margin-bottom: 0.25rem;
     }
-
     .panel-partners {
-      font-size: 0.78rem;
-      color: var(--grey-text);
-      line-height: 1.5;
-      margin-bottom: 1.2rem;
+      font-size: 0.78rem; color: var(--grey-text); line-height: 1.5; margin-bottom: 1.2rem;
     }
-
-    .panel-partners-label {
-      font-size: 0.65rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--grey-text);
-      margin-bottom: 0.25rem;
-    }
-
-    .panel-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.35rem;
-      margin-bottom: 1.5rem;
-    }
-
+    .panel-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-bottom: 1.5rem; }
     .tag {
-      background: var(--grey-light);
-      color: var(--grey-text);
-      font-size: 0.7rem;
-      font-weight: 500;
-      padding: 0.25rem 0.65rem;
-      border-radius: 3px;
-      border: 1px solid var(--border);
+      background: var(--grey-light); color: var(--grey-text);
+      font-size: 0.7rem; font-weight: 500;
+      padding: 0.25rem 0.65rem; border-radius: 3px; border: 1px solid var(--border);
     }
-
     .panel-close {
-      position: absolute;
-      top: 0.9rem; right: 0.9rem;
+      position: absolute; top: 0.9rem; right: 0.9rem;
       width: 40px; height: 40px;
-      background: rgba(0,0,0,0.45);
-      border: none;
-      border-radius: 50%;
-      cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      color: white;
-      font-size: 1.1rem;
-      transition: background 0.15s;
-      z-index: 10;
+      background: rgba(0,0,0,0.45); border: none; border-radius: 50%;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      color: white; font-size: 1.1rem; transition: background 0.15s; z-index: 10;
     }
-
     .panel-close:hover { background: rgba(0,0,0,0.7); }
 
-    /* HINT OVERLAY */
+    /* ── HINT ── */
     .map-hint {
-      position: absolute;
-      bottom: 1.5rem;
-      left: 50%;
+      position: absolute; bottom: 1.5rem; left: 50%;
       transform: translateX(-50%);
-      background: rgba(26,26,26,0.82);
-      backdrop-filter: blur(6px);
+      background: rgba(26,26,26,0.82); backdrop-filter: blur(6px);
       color: rgba(255,255,255,0.9);
-      padding: 0.5rem 1.1rem;
-      border-radius: 100px;
-      font-size: 0.75rem;
-      letter-spacing: 0.04em;
-      z-index: 700;
-      pointer-events: none;
+      padding: 0.5rem 1.1rem; border-radius: 100px;
+      font-size: 0.75rem; letter-spacing: 0.04em;
+      z-index: 700; pointer-events: none;
       animation: fadeUp 0.8s ease 1.5s both, fadeOut 0.6s ease 5s both;
       white-space: nowrap;
     }
-
     @keyframes fadeUp {
       from { opacity: 0; transform: translateX(-50%) translateY(8px); }
       to   { opacity: 1; transform: translateX(-50%) translateY(0); }
     }
     @keyframes fadeOut { to { opacity: 0; } }
 
-    /* COUNTER PILL */
+    /* ── COUNTER ── */
     .counter-pill {
-      position: absolute;
-      bottom: 1.5rem; left: 1.5rem;
-      background: white;
-      border: 1.5px solid var(--border);
-      border-radius: 100px;
-      padding: 0.35rem 0.9rem;
-      font-size: 0.72rem;
-      font-weight: 600;
-      color: var(--black);
-      z-index: 700;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      position: absolute; bottom: 1.5rem; left: 1.5rem;
+      background: white; border: 1.5px solid var(--border);
+      border-radius: 100px; padding: 0.35rem 0.9rem;
+      font-size: 0.72rem; font-weight: 600; color: var(--black);
+      z-index: 700; box-shadow: 0 2px 8px rgba(0,0,0,0.1);
       pointer-events: none;
-      transition: opacity 0.3s;
     }
-
     .counter-pill span { color: var(--magenta); }
 
-    /* RESPONSIVE */
+    /* ── RESPONSIVE ── */
     @media (max-width: 700px) {
       header { padding: 0 1rem; height: 56px; }
-      .header-center { display: none; }
-      .header-right { display: none; }
+      .header-center, .header-right { display: none; }
       .filterbar { padding: 0.5rem 1rem; }
       .chip { padding: 0.25rem 0.6rem; font-size: 0.7rem; }
+      .style-switcher { display: none; }
       #panel {
         width: 100%; max-width: 100%;
         height: 65%; top: auto; bottom: 0; right: 0;
@@ -523,21 +346,6 @@
       #panel.open { transform: translateY(0); }
       .panel-header-img, .panel-img-placeholder { height: 160px; }
     }
-
-    /* LOADING */
-    .loading-overlay {
-      position: absolute;
-      inset: 0;
-      background: rgba(255,255,255,0.9);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 900;
-      font-size: 0.9rem;
-      color: var(--grey-text);
-    }
-
-    .loading-overlay.hidden { display: none; }
   </style>
 </head>
 <body>
@@ -557,28 +365,33 @@
         <span class="brand-name">Wirtschaftsförderung<br>Amberg</span>
       </div>
     </div>
-
     <div class="header-center">
       <div class="jubilee-badge">35 JAHRE</div>
       <div class="jubilee-label">Unsere Spuren<br>in Amberg</div>
     </div>
-
     <div class="header-right">
       Amberg &amp; Region<br>
       <strong style="color:var(--magenta)">1990 – 2025</strong>
     </div>
   </header>
 
-  <!-- FILTERBAR (chips generated by JS) -->
+  <!-- FILTERBAR -->
   <div class="filterbar" id="filterbar">
     <span class="filter-label">Filter:</span>
+    <!-- chips injected by JS -->
+
+    <!-- Style switcher for demo -->
+    <div class="style-switcher">
+      <span class="style-label">Kartenstil:</span>
+      <button class="style-btn" data-style="default">Standard</button>
+      <button class="style-btn active" data-style="elegant">Elegant</button>
+      <button class="style-btn" data-style="light">Hell</button>
+    </div>
   </div>
 
   <!-- MAP -->
   <div id="map-wrap">
-    <div id="map"></div>
-
-    <div class="loading-overlay" id="loading">Karte wird geladen ...</div>
+    <div id="map" class="tile-style-elegant"></div>
 
     <!-- Detail Panel -->
     <div id="panel">
@@ -613,68 +426,83 @@
     <!-- Counter -->
     <div class="counter-pill" id="counter"><span id="counterNum">0</span> Stationen</div>
   </div>
-
 </div>
 
 <script>
-// Category config
+// ── CONFIG ──
 const CATS = {
-  bauprojekt:    { label: "Bauprojekte",    color: "#E5007D", icon: "🏗️" },
-  erschliessung: { label: "Erschließung",  color: "#00A67E", icon: "🛤️" },
-  event:         { label: "Events",         color: "#F59E0B", icon: "🎪" },
-  foerderung:    { label: "Förderung",      color: "#6366F1", icon: "🚀" },
-  netzwerk:      { label: "Netzwerk",       color: "#0EA5E9", icon: "🤝" }
+  bauprojekt:    { label: "Bauprojekte",   color: "#E5007D", icon: "\u{1F3D7}\uFE0F" },
+  erschliessung: { label: "Erschließung",  color: "#00A67E", icon: "\u{1F6E4}\uFE0F" },
+  event:         { label: "Events",        color: "#F59E0B", icon: "\u{1F3EA}" },
+  foerderung:    { label: "Förderung",     color: "#6366F1", icon: "\u{1F680}" },
+  netzwerk:      { label: "Netzwerk",      color: "#0EA5E9", icon: "\u{1F91D}" }
 };
 
-// State
+const AMBERG = [49.4430, 11.8650];
+
+// Strict bounds: only Amberg visible
+const BOUNDS = L.latLngBounds(
+  L.latLng(49.385, 11.815),
+  L.latLng(49.475, 11.935)
+);
+
+// ── STATE ──
 let markers = [];
 let activeFilter = new Set(Object.keys(CATS));
 let leafletMarkers = [];
 let map;
 
-// Init
+// ── INIT ──
 async function init() {
-  // Load marker data
   try {
     const resp = await fetch('data/markers.json');
     markers = await resp.json();
   } catch (e) {
     console.error('Failed to load markers:', e);
-    document.getElementById('loading').textContent = 'Fehler beim Laden der Markerdaten.';
     return;
   }
 
-  // Build filter chips
   buildFilterChips();
 
-  // Init map
-  const AMBERG = [49.4430, 11.8650];
   map = L.map('map', {
     center: AMBERG,
     zoom: 14,
     minZoom: 13,
-    maxZoom: 17,
+    maxZoom: 18,
     zoomControl: true,
     scrollWheelZoom: true,
-    maxBounds: L.latLngBounds(L.latLng(49.38, 11.80), L.latLng(49.50, 11.95)),
-    maxBoundsViscosity: 0.9
+    maxBounds: BOUNDS,
+    maxBoundsViscosity: 1.0  // hard boundary — cannot drag outside
   });
 
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-    maxZoom: 19
+    maxZoom: 19,
+    bounds: BOUNDS
   }).addTo(map);
 
   map.zoomControl.setPosition('bottomright');
   map.on('click', closePanel);
 
   addMarkers();
-  document.getElementById('loading').classList.add('hidden');
+
+  // Style switcher
+  document.querySelectorAll('.style-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.style-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const mapEl = document.getElementById('map');
+      mapEl.className = 'tile-style-' + btn.dataset.style;
+      // Force tile re-render
+      map.invalidateSize();
+    });
+  });
 }
 
-// Build filter chips from data
+// ── FILTER CHIPS ──
 function buildFilterChips() {
   const bar = document.getElementById('filterbar');
+  const switcher = bar.querySelector('.style-switcher');
   const counts = {};
   markers.forEach(m => { counts[m.cat] = (counts[m.cat] || 0) + 1; });
 
@@ -683,40 +511,32 @@ function buildFilterChips() {
     const btn = document.createElement('button');
     btn.className = 'chip active';
     btn.dataset.cat = key;
-    btn.innerHTML = `<span class="chip-dot"></span> ${cfg.label} <span class="chip-count">${counts[key]}</span>`;
-    btn.addEventListener('click', () => toggleFilter(key, btn));
-    bar.appendChild(btn);
+    btn.innerHTML = '<span class="chip-dot"></span> ' + cfg.label +
+      ' <span class="chip-count">' + counts[key] + '</span>';
+    btn.addEventListener('click', () => {
+      if (activeFilter.has(key)) { activeFilter.delete(key); btn.classList.remove('active'); }
+      else { activeFilter.add(key); btn.classList.add('active'); }
+      addMarkers();
+      closePanel();
+    });
+    bar.insertBefore(btn, switcher);
   });
 }
 
-function toggleFilter(cat, btn) {
-  if (activeFilter.has(cat)) {
-    activeFilter.delete(cat);
-    btn.classList.remove('active');
-  } else {
-    activeFilter.add(cat);
-    btn.classList.add('active');
-  }
-  addMarkers();
-  closePanel();
-}
-
-// Create marker icon
+// ── MARKERS ──
 function createIcon(data) {
   const cat = CATS[data.cat] || CATS.bauprojekt;
   return L.divIcon({
-    html: `<div class="pin-wrap">
-      <div class="pin-head" style="background:${cat.color}"></div>
-      <div class="pin-icon">${cat.icon}</div>
-    </div>`,
+    html: '<div class="pin-wrap">' +
+      '<div class="pin-head" style="background:' + cat.color + '"></div>' +
+      '<div class="pin-icon">' + cat.icon + '</div></div>',
     className: '',
-    iconSize: [32, 40],
-    iconAnchor: [16, 40],
-    popupAnchor: [0, -44]
+    iconSize: [36, 44],
+    iconAnchor: [18, 44],
+    popupAnchor: [0, -48]
   });
 }
 
-// Add/refresh markers on map
 function addMarkers() {
   leafletMarkers.forEach(m => map.removeLayer(m.layer));
   leafletMarkers = [];
@@ -739,19 +559,20 @@ function addMarkers() {
   document.getElementById('counterNum').textContent = visible.length;
 }
 
-// Open detail panel
+// ── PANEL ──
 function openPanel(data) {
   const cat = CATS[data.cat] || CATS.bauprojekt;
 
-  // Image
   const imgWrap = document.getElementById('panelImgWrap');
   if (data.image) {
-    imgWrap.innerHTML = `<img class="panel-header-img" src="${data.image}" alt="${data.title}" onerror="this.parentElement.innerHTML='<div class=\\'panel-img-placeholder\\'><span class=\\'placeholder-icon\\'>${cat.icon}</span></div>'" />`;
+    imgWrap.innerHTML = '<img class="panel-header-img" src="' + data.image +
+      '" alt="' + data.title +
+      '" onerror="this.parentElement.innerHTML=\'<div class=\\\'panel-img-placeholder\\\'><span class=\\\'placeholder-icon\\\'>' +
+      cat.icon + '</span></div>\'" />';
   } else {
-    imgWrap.innerHTML = `<div class="panel-img-placeholder">
-      <span class="placeholder-icon">${cat.icon}</span>
-      <span class="placeholder-text">Bild folgt</span>
-    </div>`;
+    imgWrap.innerHTML = '<div class="panel-img-placeholder">' +
+      '<span class="placeholder-icon">' + cat.icon + '</span>' +
+      '<span class="placeholder-text">Bild folgt</span></div>';
   }
 
   document.getElementById('panelStrip').style.background = cat.color;
@@ -759,47 +580,38 @@ function openPanel(data) {
   document.getElementById('panelBadgeText').textContent = cat.label;
   document.getElementById('panelBadge').style.color = cat.color;
   document.getElementById('panelTitle').textContent = data.title;
-  document.getElementById('panelSubtitle').textContent = data.subtitle || '';
-  document.getElementById('panelSubtitle').style.display = data.subtitle ? '' : 'none';
 
-  // Year + Status
+  const subEl = document.getElementById('panelSubtitle');
+  subEl.textContent = data.subtitle || '';
+  subEl.style.display = data.subtitle ? '' : 'none';
+
   let yearHTML = data.year || '';
-  if (data.status) {
-    yearHTML += ` <span class="panel-status ${data.status}">${data.status}</span>`;
-  }
+  if (data.status) yearHTML += ' <span class="panel-status ' + data.status + '">' + data.status + '</span>';
   document.getElementById('panelYear').innerHTML = yearHTML;
 
   document.getElementById('panelText').textContent = data.description;
 
-  // Facts
   const factsEl = document.getElementById('panelFacts');
   if (data.facts) {
     document.getElementById('panelFactsContent').textContent = data.facts;
     factsEl.style.display = '';
-  } else {
-    factsEl.style.display = 'none';
-  }
+  } else { factsEl.style.display = 'none'; }
 
-  // Partners
   const partnersEl = document.getElementById('panelPartners');
   if (data.partners && data.partners.length) {
     document.getElementById('panelPartnersContent').textContent = data.partners.join(', ');
     partnersEl.style.display = '';
-  } else {
-    partnersEl.style.display = 'none';
-  }
+  } else { partnersEl.style.display = 'none'; }
 
-  // Tags
-  const tagsEl = document.getElementById('panelTags');
-  tagsEl.innerHTML = (data.tags || []).map(t => `<span class="tag">${t}</span>`).join('');
+  document.getElementById('panelTags').innerHTML =
+    (data.tags || []).map(t => '<span class="tag">' + t + '</span>').join('');
 
   document.getElementById('panel').classList.add('open');
 
-  // Pan map so marker stays visible (offset for panel)
+  // Pan so marker stays visible next to panel
   const panelWidth = window.innerWidth > 700 ? 420 : 0;
   const point = map.latLngToContainerPoint([data.lat, data.lng]);
-  const offset = panelWidth / 2;
-  const newPoint = L.point(point.x - offset, point.y);
+  const newPoint = L.point(point.x - panelWidth / 2, point.y);
   const newLatLng = map.containerPointToLatLng(newPoint);
   map.panTo(newLatLng, { animate: true, duration: 0.4 });
 }
@@ -813,7 +625,7 @@ document.getElementById('panelClose').addEventListener('click', (e) => {
   closePanel();
 });
 
-// Go
+// ── GO ──
 init();
 </script>
 </body>
