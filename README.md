@@ -3,14 +3,7 @@
 Interaktive Karte für das 35-jährige Jubiläum der WIFAM Amberg.
 Besucher entdecken auf einem Touchscreen-Display Stationen der WIFAM in Amberg.
 
-## Live-Demo
-
-`index.html` direkt im Browser öffnen oder:
-
-```bash
-python -m http.server 8080
-# → http://localhost:8080
-```
+**Live:** https://sfleischmann-3steps2.github.io/WIFAM/
 
 ## Projektstruktur
 
@@ -21,6 +14,8 @@ WIFAM/
 │   └── markers.json        # Marker-Daten (12 Stationen)
 ├── assets/
 │   └── images/             # Bilder der Referenzen
+├── docs/
+│   └── konzept-kartenloesung.md  # Konzeptpapier für Kunden
 ├── CLAUDE.md               # KI-Agent-Briefing
 └── WifAm_Referenzen_Erfassung.xlsx  # Erfassungsvorlage
 ```
@@ -31,6 +26,7 @@ WIFAM/
 - **Vanilla HTML/CSS/JS** — kein Build-Step, maximale Portierbarkeit
 - Daten in `markers.json` (per fetch geladen)
 - Touch-optimiert für Event-Display
+- 3 Kartenstile umschaltbar (Standard, Elegant, Hell)
 
 ## Kategorien
 
@@ -41,6 +37,10 @@ WIFAM/
 | Events | Amber `#F59E0B` | 3 |
 | Förderung | Indigo `#6366F1` | 4 |
 | Netzwerk | Cyan `#0EA5E9` | 3 |
+
+## Status
+
+MVP live auf GitHub Pages — wartet auf Kunden-Feedback.
 
 ## Kunde
 
