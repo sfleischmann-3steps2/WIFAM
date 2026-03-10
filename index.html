@@ -59,15 +59,8 @@
       position: relative;
       z-index: 1000;
     }
-    .brand { display: flex; align-items: center; gap: 0.85rem; }
-    .brand-icon svg { display: block; }
-    .brand-text { display: flex; flex-direction: column; line-height: 1; }
-    .brand-name {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 800; font-size: 0.78rem;
-      letter-spacing: 0.06em; text-transform: uppercase;
-      color: var(--black); line-height: 1.2;
-    }
+    .brand { display: flex; align-items: center; }
+    .brand-logo { height: 44px; width: auto; display: block; }
 
     .header-center {
       position: absolute; left: 50%; transform: translateX(-50%);
@@ -385,16 +378,7 @@
   <!-- HEADER -->
   <header>
     <div class="brand">
-      <div class="brand-icon">
-        <svg width="48" height="32" viewBox="0 0 48 32" fill="none">
-          <polygon points="0,32 12,8 24,32" fill="#E5007D"/>
-          <polygon points="12,32 24,6 36,32" fill="#E5007D" opacity="0.75"/>
-          <polygon points="24,32 36,4 48,32" fill="#E5007D" opacity="0.5"/>
-        </svg>
-      </div>
-      <div class="brand-text">
-        <span class="brand-name">Wirtschaftsförderung<br>Amberg</span>
-      </div>
+      <img src="assets/images/wifam-logo.webp" alt="WifAm – Wirtschaftsförderung Amberg" class="brand-logo" />
     </div>
     <div class="header-center">
       <div class="jubilee-badge">35 JAHRE</div>
