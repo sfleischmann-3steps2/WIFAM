@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <meta name="robots" content="noindex" />
+  <title>WIFAM - 35 Jahre Wirtschaftsförderung Amberg (V5 - Feinschliff)</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      /* CD-konforme Primärfarben */
+      --magenta:     #c6007e;
+      --magenta-dk:  #691340;
+      --magenta-lt:  #f4e6ef;
+      --black:       #1d1d1b;
+      --white:       #ffffff;
+      --grey-light:  #f4f1f6;
+      --grey-mid:    #E8E0EE;
+      --grey-text:   #666666;
+      --border:      #E5DDE9;
+
+      /* CD-Sekundärfarben als Kategoriefarben (6 Kategorien) */
+      --c-baumassnahme:   #691340;
+      --c-baubetreuung:   #5B7BB3;
+      --c-erschliessung:  #3D8B6E;
+      --c-events:         #eb7d27;
+      --c-ereignisse:     #9B59B6;
+      --c-projekte:       #4a90a4;
+
+      --sidebar-w: 600px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      height: 100%;
+      font-family: 'Montserrat', sans-serif;
+      background: var(--white);
+      color: var(--black);
+      overflow: hidden;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .app {
+      display: grid;
+      grid-template-rows: auto auto 1fr;
+      height: 100vh;
+      height: 100dvh;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: var(--white);
+      height: 60px;
+      padding: 0 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 2px solid var(--magenta);
+      z-index: 1000;
+    }
+    .brand-logo { height: 52px; width: auto; display: block; }
+    .header-center {
+      position: absolute; left: 50%; transform: translateX(-50%);
+      display: flex; align-items: center; gap: 0.6rem;
+    }
+    .jubilee-badge {
+      background: var(--magenta); color: var(--white);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800; font-size: 1.05rem;
+      letter-spacing: 0.04em; padding: 0.2rem 0.7rem; border-radius: 2px;
+      text-transform: uppercase;
+    }
+    .jubilee-label {
+      font-size: 0.7rem; font-weight: 500; color: var(--grey-text);
+      letter-spacing: 0.05em; text-transform: uppercase;
+    }
+    .header-right {
+      font-size: 0.7rem; color: var(--grey-text);
+      text-align: right; line-height: 1.4;
+    }
+
+    /* ── DAS BAND (CD-Gestaltungselement) ── */
+    .das-band {
+      position: relative;
+      height: 18px;
+      overflow: hidden;
+      z-index: 999;
+      flex-shrink: 0;
+    }
+    .das-band svg {
+      position: absolute;
+      top: -8px;
+      left: -2%;
+      width: 104%;
+      height: 34px;
+    }
+
+    /* ── MAIN LAYOUT ── */
+    .main-content {
+      display: grid;
+      grid-template-columns: var(--sidebar-w) 1fr;
+      overflow: hidden;
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid var(--border);
+      background: var(--white);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .sidebar-header {
+      padding: 1rem 1.25rem 0.75rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .sidebar-title {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800; font-size: 1.1rem;
+      text-transform: uppercase; letter-spacing: 0.04em;
+      color: var(--black); margin-bottom: 0.6rem;
+    }
+    .sidebar-subtitle {
+      font-size: 0.75rem; color: var(--grey-text); margin-bottom: 0.7rem;
+    }
+    .onboarding-hint {
+      font-size: 0.72rem; color: var(--grey-text); margin-bottom: 0.5rem;
+      font-style: italic; opacity: 0.8;
+      transition: opacity 0.3s ease, max-height 0.3s ease;
+      max-height: 2rem; overflow: hidden;
+    }
+    .onboarding-hint.hidden {
+      opacity: 0; max-height: 0; margin: 0;
+    }
+    .empty-state {
+      padding: 2rem 1.25rem;
+      text-align: center;
+      color: var(--grey-text);
+      font-size: 0.82rem;
+      line-height: 1.6;
+    }
+    .empty-state-icon { font-size: 1.5rem; margin-bottom: 0.5rem; opacity: 0.5; }
+
+    /* Filter chips */
+    .filter-row {
+      display: flex; gap: 0.35rem; flex-wrap: wrap;
+    }
+    .chip {
+      display: inline-flex; align-items: center; gap: 0.25rem;
+      padding: 0.4rem 0.8rem; border-radius: 100px;
+      border: 1.5px solid var(--border);
+      font-family: 'Montserrat', sans-serif; font-size: 0.7rem; font-weight: 500;
+      cursor: pointer; background: var(--white); color: var(--grey-text);
+      transition: all 0.15s ease; user-select: none;
+      letter-spacing: 0.02em;
+    }
+    .chip:active { transform: scale(0.96); }
+    .chip-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    .chip[data-cat="baumassnahme"]  .chip-dot { background: var(--c-baumassnahme); }
+    .chip[data-cat="baubetreuung"]  .chip-dot { background: var(--c-baubetreuung); }
+    .chip[data-cat="erschliessung"] .chip-dot { background: var(--c-erschliessung); }
+    .chip[data-cat="events"]        .chip-dot { background: var(--c-events); }
+    .chip[data-cat="ereignisse"]    .chip-dot { background: var(--c-ereignisse); }
+    .chip[data-cat="projekte"]      .chip-dot { background: var(--c-projekte); }
+    .chip.active[data-cat="baumassnahme"]  { background: var(--c-baumassnahme);  border-color: var(--c-baumassnahme);  color: white; }
+    .chip.active[data-cat="baubetreuung"]  { background: var(--c-baubetreuung);  border-color: var(--c-baubetreuung);  color: white; }
+    .chip.active[data-cat="erschliessung"] { background: var(--c-erschliessung); border-color: var(--c-erschliessung); color: white; }
+    .chip.active[data-cat="events"]        { background: var(--c-events);        border-color: var(--c-events);        color: white; }
+    .chip.active[data-cat="ereignisse"]    { background: var(--c-ereignisse);    border-color: var(--c-ereignisse);    color: white; }
+    .chip.active[data-cat="projekte"]      { background: var(--c-projekte);      border-color: var(--c-projekte);      color: white; }
+    .chip.active .chip-dot { background: rgba(255,255,255,0.5); }
+    .chip-check {
+      width: 12px; height: 12px;
+      display: none;
+      flex-shrink: 0;
+    }
+    .chip.active .chip-check { display: inline-block; }
+    .chip.active .chip-dot { display: none; }
+
+    /* ── CARD LIST VIEW ── */
+    .sidebar-views {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-list-view,
+    .detail-view {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      transition: transform 0.35s cubic-bezier(0.4,0,0.2,1), opacity 0.35s ease;
+    }
+    .card-list-view {
+      transform: translateX(0);
+      opacity: 1;
+    }
+    .sidebar.show-detail .card-list-view {
+      transform: translateX(-30px);
+      opacity: 0;
+      pointer-events: none;
+    }
+    .detail-view {
+      transform: translateX(30px);
+      opacity: 0;
+      pointer-events: none;
+    }
+    .sidebar.show-detail .detail-view {
+      transform: translateX(0);
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    /* ── STATION CARDS ── */
+    .station-card {
+      display: flex;
+      gap: 0.75rem;
+      padding: 0.85rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      transition: background 0.15s;
+      align-items: flex-start;
+    }
+    .station-card:hover { background: var(--grey-light); }
+    .station-card.active { background: var(--magenta-lt); }
+
+    .card-color-bar {
+      width: 4px;
+      min-height: 40px;
+      border-radius: 2px;
+      flex-shrink: 0;
+      align-self: stretch;
+    }
+    .card-icon {
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      text-align: center;
+      padding-top: 0.1rem;
+    }
+    .card-icon img {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+    }
+    .card-content { flex: 1; min-width: 0; }
+    .card-title {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700; font-size: 0.88rem;
+      text-transform: uppercase; letter-spacing: 0.04em;
+      color: var(--black); line-height: 1.2;
+      margin-bottom: 0.15rem;
+    }
+    .card-subtitle {
+      font-size: 0.75rem; color: var(--grey-text);
+      line-height: 1.3; font-weight: 400;
+    }
+    .card-thumb {
+      width: 72px; height: 54px;
+      border-radius: 4px;
+      object-fit: cover;
+      flex-shrink: 0;
+      align-self: center;
+    }
+
+    /* ── DETAIL VIEW ── */
+    .detail-back {
+      display: flex; align-items: center; gap: 0.4rem;
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      font-size: 0.78rem; font-weight: 600; color: var(--magenta);
+      text-transform: uppercase; letter-spacing: 0.06em;
+      transition: background 0.15s;
+    }
+    .detail-back:hover { background: var(--grey-light); }
+    .detail-back svg { width: 16px; height: 16px; }
+
+    .detail-img {
+      width: 100%; height: 240px;
+      object-fit: cover; display: block;
+    }
+    .detail-img-placeholder {
+      width: 100%; height: 240px;
+      background: linear-gradient(135deg, var(--grey-light) 0%, var(--grey-mid) 100%);
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+    }
+    .detail-img-placeholder img { opacity: 0.35; }
+    .detail-img-placeholder .placeholder-text {
+      position: absolute; bottom: 0.6rem; right: 0.6rem;
+      font-size: 0.62rem; color: var(--grey-text); opacity: 0.5;
+    }
+    .detail-cat-strip { height: 3px; }
+    .detail-body { padding: 1.2rem 1.25rem 2rem; }
+    .detail-badge {
+      display: inline-flex; align-items: center; gap: 0.3rem;
+      font-size: 0.65rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.5rem;
+    }
+    .detail-badge-dot { width: 7px; height: 7px; border-radius: 50%; }
+    .detail-title {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800; font-size: 1.4rem; line-height: 1.15;
+      color: var(--black); text-transform: uppercase;
+      letter-spacing: 0.04em; margin-bottom: 0.1rem;
+    }
+    .detail-subtitle {
+      font-size: 0.82rem; color: var(--grey-text); margin-bottom: 0.2rem;
+    }
+    .detail-year {
+      font-size: 0.78rem; color: var(--grey-text); margin-bottom: 0.9rem;
+    }
+    .detail-status {
+      display: inline-block; font-size: 0.62rem; font-weight: 600;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 0.12rem 0.45rem; border-radius: 3px; margin-left: 0.4rem;
+    }
+    .detail-status.abgeschlossen { background: #dcfce7; color: #166534; }
+    .detail-status.laufend       { background: #dbeafe; color: #1e40af; }
+    .detail-status.geplant       { background: #fef3c7; color: #92400e; }
+    .detail-divider {
+      width: 36px; height: 3px; background: var(--magenta);
+      margin-bottom: 0.9rem; border-radius: 2px;
+    }
+    .detail-text {
+      font-size: 0.85rem; line-height: 1.7; color: #333; margin-bottom: 0.9rem;
+      font-weight: 400;
+    }
+    .detail-facts {
+      background: var(--grey-light); border-left: 3px solid var(--magenta);
+      padding: 0.6rem 0.9rem; font-size: 0.78rem; color: var(--black);
+      line-height: 1.5; margin-bottom: 1rem; border-radius: 0 4px 4px 0;
+    }
+    .detail-section-label {
+      font-size: 0.62rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.1em; color: var(--grey-text); margin-bottom: 0.2rem;
+    }
+    .detail-partners {
+      font-size: 0.75rem; color: var(--grey-text); line-height: 1.5; margin-bottom: 1rem;
+    }
+    .detail-tags { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+    .tag {
+      background: var(--grey-light); color: var(--grey-text);
+      font-size: 0.68rem; font-weight: 500;
+      padding: 0.2rem 0.55rem; border-radius: 3px; border: 1px solid var(--border);
+    }
+
+    /* ── MAP ── */
+    .map-container {
+      position: relative;
+      overflow: hidden;
+      background: #f0ede8;
+    }
+    #map { width: 100%; height: 100%; }
+
+    /* Reduced, editorial map style */
+    .leaflet-tile {
+      filter: brightness(1.04) contrast(0.95) saturate(0.9);
+    }
+
+    .leaflet-control-zoom {
+      border: none !important;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.12) !important;
+      border-radius: 6px !important; overflow: hidden;
+    }
+    .leaflet-control-zoom a {
+      width: 40px !important; height: 40px !important;
+      line-height: 40px !important;
+      background: white !important; color: var(--black) !important;
+      border: none !important;
+      border-bottom: 1px solid var(--border) !important;
+      font-size: 1.3rem !important; font-weight: 300 !important;
+    }
+    .leaflet-control-zoom a:hover { background: var(--grey-light) !important; }
+    .leaflet-control-attribution { font-size: 0.55rem !important; }
+
+    /* ── CUSTOM MARKER ── */
+    .pin-wrap {
+      position: relative; width: 40px; height: 48px;
+      cursor: pointer;
+      transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1);
+      transform-origin: bottom center;
+    }
+    .pin-wrap:hover, .pin-wrap.active {
+      transform: scale(1.25) translateY(-4px);
+    }
+    .pin-head {
+      width: 34px; height: 34px;
+      border-radius: 50% 50% 50% 0;
+      transform: rotate(-45deg);
+      border: 2.5px solid rgba(255,255,255,0.9);
+      box-shadow: 0 3px 12px rgba(0,0,0,0.25), 0 1px 4px rgba(0,0,0,0.15);
+      position: absolute; top: 0; left: 3px;
+    }
+    .pin-icon {
+      position: absolute; top: 6px; left: 8px;
+      font-size: 1rem;
+      line-height: 1;
+    }
+
+    /* Hover tooltip */
+    .pin-tooltip {
+      position: absolute;
+      bottom: 56px; left: 50%;
+      transform: translateX(-50%);
+      background: rgba(29,29,27,0.9);
+      color: white;
+      padding: 0.35rem 0.7rem;
+      border-radius: 5px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 500;
+      white-space: nowrap;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.18s ease;
+      z-index: 900;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    .pin-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%; left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: rgba(29,29,27,0.9);
+    }
+    .pin-wrap:hover .pin-tooltip { opacity: 1; }
+
+    /* Active marker pulse */
+    .pin-wrap.active .pin-head {
+      box-shadow: 0 0 0 6px rgba(198,0,126,0.2), 0 3px 12px rgba(0,0,0,0.25);
+    }
+
+    /* ── WIFAM-ECK (CD-Gestaltungselement) ── */
+    .wifam-eck {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 0 0 120px 120px;
+      border-color: transparent transparent var(--magenta) transparent;
+      z-index: 700;
+      opacity: 0.85;
+      pointer-events: none;
+    }
+
+    /* ── SIDEBAR TOGGLE ── */
+    .sidebar-toggle {
+      position: absolute;
+      top: 50%;
+      left: var(--sidebar-w);
+      transform: translateY(-50%);
+      z-index: 900;
+      width: 24px; height: 48px;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-left: none;
+      border-radius: 0 8px 8px 0;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 2px 0 8px rgba(0,0,0,0.08);
+      transition: left 0.35s cubic-bezier(0.4,0,0.2,1);
+      color: var(--grey-text);
+      font-size: 0.7rem;
+      padding: 0;
+    }
+    .sidebar-toggle:hover { background: var(--grey-light); color: var(--magenta); }
+    .sidebar-toggle svg { width: 14px; height: 14px; transition: transform 0.35s ease; }
+
+    .main-content.sidebar-hidden .sidebar {
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+    }
+    .main-content.sidebar-hidden .sidebar-toggle {
+      left: 0;
+    }
+    .main-content.sidebar-hidden .sidebar-toggle svg {
+      transform: rotate(180deg);
+    }
+    .sidebar {
+      transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    /* ── COUNTER ── */
+    .counter-pill {
+      position: absolute; bottom: 1.2rem; left: 1.2rem;
+      background: white; border: 1.5px solid var(--border);
+      border-radius: 100px; padding: 0.3rem 0.8rem;
+      font-size: 0.7rem; font-weight: 600; color: var(--black);
+      z-index: 700; box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      pointer-events: none;
+    }
+    .counter-pill span { color: var(--magenta); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .main-content {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr;
+        position: relative;
+      }
+      header { height: 52px; padding: 0 1rem; }
+      .header-center, .header-right { display: none; }
+      .das-band { height: 12px; }
+      .das-band svg { top: -10px; height: 30px; }
+
+      .sidebar {
+        position: absolute;
+        bottom: 0; left: 0; right: 0;
+        height: 45%;
+        z-index: 800;
+        border-right: none;
+        border-top: 1px solid var(--border);
+        border-radius: 16px 16px 0 0;
+        box-shadow: 0 -4px 20px rgba(0,0,0,0.12);
+        transition: height 0.35s ease;
+      }
+      .sidebar.show-detail { height: 65%; }
+      .sidebar-header { padding: 0.75rem 1rem 0.6rem; }
+
+      .map-container { grid-row: 1; grid-column: 1; }
+
+      .wifam-eck {
+        border-width: 0 0 80px 80px;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+
+  <!-- HEADER -->
+  <header>
+    <img src="assets/images/wifam-logo.webp" alt="WifAm - Wirtschaftsförderung Amberg" class="brand-logo" />
+    <div class="header-center">
+      <div class="jubilee-badge">35 JAHRE</div>
+      <div class="jubilee-label">Unsere Spuren<br>in Amberg</div>
+    </div>
+    <div class="header-right">
+      Amberg &amp; Region<br>
+      <strong style="color:var(--magenta)">1991 - 2026</strong>
+    </div>
+  </header>
+
+  <!-- DAS BAND - CD-Gestaltungselement -->
+  <div class="das-band">
+    <svg viewBox="0 0 1200 34" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M-10,28 C150,8 300,32 500,16 C700,0 900,30 1210,12"
+            stroke="#c6007e" stroke-width="5" fill="none"
+            opacity="0.55" stroke-linecap="round" />
+      <path d="M-10,22 C200,34 400,6 600,22 C800,38 1000,8 1210,20"
+            stroke="#c6007e" stroke-width="3" fill="none"
+            opacity="0.35" stroke-linecap="round" />
+    </svg>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main-content" id="mainContent">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-title">35 Jahre: Unsere Stationen</div>
+        <div class="onboarding-hint" id="onboardingHint">Tippen Sie auf eine Station, um mehr zu erfahren</div>
+        <div class="filter-row" id="filterRow"></div>
+      </div>
+
+      <div class="sidebar-views">
+        <!-- Card List -->
+        <div class="card-list-view" id="cardList"></div>
+
+        <!-- Detail -->
+        <div class="detail-view" id="detailView">
+          <div class="detail-back" id="detailBack">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            Alle Stationen
+          </div>
+          <div id="detailImgWrap"></div>
+          <div class="detail-cat-strip" id="detailStrip"></div>
+          <div class="detail-body">
+            <div class="detail-badge" id="detailBadge">
+              <div class="detail-badge-dot" id="detailBadgeDot"></div>
+              <span id="detailBadgeText"></span>
+            </div>
+            <h2 class="detail-title" id="detailTitle"></h2>
+            <div class="detail-subtitle" id="detailSubtitle"></div>
+            <div class="detail-year" id="detailYear"></div>
+            <div class="detail-divider"></div>
+            <p class="detail-text" id="detailText"></p>
+            <div class="detail-facts" id="detailFacts" style="display:none">
+              <div class="detail-section-label">Kennzahlen</div>
+              <div id="detailFactsContent"></div>
+            </div>
+            <div class="detail-partners" id="detailPartners" style="display:none">
+              <div class="detail-section-label">Partner</div>
+              <div id="detailPartnersContent"></div>
+            </div>
+            <div class="detail-tags" id="detailTags"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SIDEBAR TOGGLE -->
+    <button class="sidebar-toggle" id="sidebarToggle" title="Sidebar ein-/ausblenden">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+    </button>
+
+    <!-- MAP -->
+    <div class="map-container">
+      <div id="map"></div>
+      <!-- WIFAM-Eck (CD-Dreieck unten rechts) -->
+      <div class="wifam-eck"></div>
+      <div class="counter-pill"><span id="counterNum">0</span> Stationen</div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// ── CONFIG (6 Kategorien, CD-Sekundärfarben, SVG-Icons) ──
+const CATS = {
+  baumassnahme:  { label: "Baumaßnahme",   color: "#691340", icon: "assets/icons/Immobilien_rund_RGB.svg", emoji: "\u{1F3D7}\uFE0F" },
+  baubetreuung:  { label: "Baubetreuung",   color: "#5B7BB3", icon: "assets/icons/Jobs_rund_RGB.svg", emoji: "\u{1F4CB}" },
+  erschliessung: { label: "Erschließung",   color: "#3D8B6E", icon: "assets/icons/Stadtlabor_rund_RGB.svg", emoji: "\u{1F6E4}\uFE0F" },
+  events:        { label: "Events",          color: "#eb7d27", icon: "assets/icons/Events_rund_RGB.svg", emoji: "\u{1F389}" },
+  ereignisse:    { label: "Ereignisse",      color: "#9B59B6", icon: "assets/icons/News_rund_RGB.svg", emoji: "\u{2B50}" },
+  projekte:      { label: "Projekte",        color: "#4a90a4", icon: "assets/icons/StartUps_rund_RGB.svg", emoji: "\u{1F680}" }
+};
+
+const AMBERG = [49.4430, 11.8650];
+const BOUNDS = L.latLngBounds(L.latLng(49.385, 11.815), L.latLng(49.475, 11.935));
+
+// ── STATE ──
+let markers = [];
+let activeFilter = new Set(Object.keys(CATS));
+let leafletMarkers = [];
+let selectedStation = null;
+let cardListScrollTop = 0;
+let map;
+
+// ── INIT ──
+async function init() {
+  try {
+    const resp = await fetch('data/markers.json');
+    markers = await resp.json();
+  } catch (e) {
+    console.error('Failed to load markers:', e);
+    return;
+  }
+
+  buildFilterChips();
+  buildCardList();
+
+  map = L.map('map', {
+    center: AMBERG,
+    zoom: 14,
+    minZoom: 13,
+    maxZoom: 18,
+    zoomControl: true,
+    scrollWheelZoom: true,
+    maxBounds: BOUNDS,
+    maxBoundsViscosity: 1.0
+  });
+
+  // CartoDB Positron - clean, reduced, editorial style
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/">CARTO</a>',
+    maxZoom: 19,
+    subdomains: 'abcd'
+  }).addTo(map);
+
+  map.zoomControl.setPosition('bottomright');
+
+  // Prevent sidebar scroll from zooming map
+  const sidebar = document.getElementById('sidebar');
+  L.DomEvent.disableScrollPropagation(sidebar);
+
+  map.on('click', deselectStation);
+
+  addMarkers();
+}
+
+// ── FILTER CHIPS ──
+function buildFilterChips() {
+  const row = document.getElementById('filterRow');
+  row.innerHTML = '';
+  const counts = {};
+  markers.filter(m => m.visible !== false).forEach(m => { counts[m.cat] = (counts[m.cat] || 0) + 1; });
+
+  Object.entries(CATS).forEach(([key, cfg]) => {
+    if (!counts[key]) return;
+    const btn = document.createElement('button');
+    btn.className = 'chip active';
+    btn.dataset.cat = key;
+    btn.innerHTML = '<span class="chip-dot"></span>' +
+      '<svg class="chip-check" viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2.5 6 5 8.5 9.5 3.5"></polyline></svg> ' +
+      cfg.label + ' <span style="opacity:0.7">(' + counts[key] + ')</span>';
+    btn.addEventListener('click', () => {
+      if (activeFilter.has(key)) { activeFilter.delete(key); btn.classList.remove('active'); }
+      else { activeFilter.add(key); btn.classList.add('active'); }
+      buildCardList();
+      addMarkers();
+      deselectStation();
+    });
+    row.appendChild(btn);
+  });
+}
+
+// ── CARD LIST ──
+function buildCardList() {
+  const list = document.getElementById('cardList');
+  list.innerHTML = '';
+
+  const visible = markers.filter(m => m.visible !== false && activeFilter.has(m.cat));
+  const totalVisible = markers.filter(m => m.visible !== false).length;
+
+  if (visible.length === 0) {
+    list.innerHTML = '<div class="empty-state">' +
+      '<div class="empty-state-icon">&#x1F50D;</div>' +
+      'Keine Stationen ausgewählt.<br>Aktivieren Sie einen Filter oben.</div>';
+    document.getElementById('counterNum').innerHTML = '0 <span style="color:var(--grey-text);font-weight:400">von ' + totalVisible + '</span>';
+    return;
+  }
+
+  visible.forEach(data => {
+    const cat = CATS[data.cat] || CATS.baumassnahme;
+    const card = document.createElement('div');
+    card.className = 'station-card';
+    card.dataset.id = data.id;
+
+    let thumbHTML = '';
+    if (data.image) {
+      thumbHTML = '<img class="card-thumb" src="' + data.image + '" alt="" loading="lazy" />';
+    }
+
+    card.innerHTML =
+      '<div class="card-color-bar" style="background:' + cat.color + '"></div>' +
+      '<div class="card-icon"><img src="' + cat.icon + '" alt="" /></div>' +
+      '<div class="card-content">' +
+        '<div class="card-title">' + (data.subtitle || data.title) + '</div>' +
+        '<div class="card-subtitle">' + data.title + '</div>' +
+      '</div>' +
+      thumbHTML;
+
+    card.addEventListener('click', () => selectStation(data));
+    list.appendChild(card);
+  });
+
+  document.getElementById('counterNum').innerHTML = visible.length + ' <span style="color:var(--grey-text);font-weight:400">von ' + totalVisible + '</span>';
+}
+
+// ── MARKERS ──
+function createIcon(data) {
+  const cat = CATS[data.cat] || CATS.baumassnahme;
+  const safeTitle = data.title.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  return L.divIcon({
+    html: '<div class="pin-wrap" data-id="' + data.id + '">' +
+      '<div class="pin-tooltip">' + safeTitle + '</div>' +
+      '<div class="pin-head" style="background:' + cat.color + '"></div>' +
+      '<div class="pin-icon">' + cat.emoji + '</div></div>',
+    className: '',
+    iconSize: [40, 48],
+    iconAnchor: [20, 48],
+    popupAnchor: [0, -52]
+  });
+}
+
+function addMarkers() {
+  leafletMarkers.forEach(m => map.removeLayer(m.layer));
+  leafletMarkers = [];
+
+  const visible = markers.filter(m => m.visible !== false && activeFilter.has(m.cat));
+
+  visible.forEach(data => {
+    const layer = L.marker([data.lat, data.lng], {
+      icon: createIcon(data),
+      riseOnHover: true
+    }).addTo(map);
+
+    layer.on('click', (e) => {
+      L.DomEvent.stopPropagation(e);
+      selectStation(data);
+    });
+    leafletMarkers.push({ layer, data });
+  });
+}
+
+// ── SELECT STATION ──
+function selectStation(data) {
+  const cat = CATS[data.cat] || CATS.baumassnahme;
+  selectedStation = data;
+
+  // Save scroll position
+  cardListScrollTop = document.getElementById('cardList').scrollTop;
+
+  // Hide onboarding hint on first interaction
+  const hint = document.getElementById('onboardingHint');
+  if (hint && !hint.classList.contains('hidden')) hint.classList.add('hidden');
+
+  // Highlight card and scroll into view
+  document.querySelectorAll('.station-card').forEach(c => c.classList.remove('active'));
+  const activeCard = document.querySelector('.station-card[data-id="' + data.id + '"]');
+  if (activeCard) {
+    activeCard.classList.add('active');
+    activeCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  // Highlight marker
+  document.querySelectorAll('.pin-wrap').forEach(p => p.classList.remove('active'));
+  const activePin = document.querySelector('.pin-wrap[data-id="' + data.id + '"]');
+  if (activePin) activePin.classList.add('active');
+
+  // Populate detail
+  const imgWrap = document.getElementById('detailImgWrap');
+  if (data.image) {
+    imgWrap.innerHTML = '<img class="detail-img" loading="lazy" src="' + data.image +
+      '" alt="' + data.title +
+      '" onerror="this.parentElement.innerHTML=\'<div class=\\\'detail-img-placeholder\\\'><img src=\\\'' +
+      cat.icon + '\\\' style=\\\'width:60px;height:60px;opacity:0.35;border-radius:50%\\\' /></div>\'" />';
+  } else {
+    imgWrap.innerHTML = '<div class="detail-img-placeholder">' +
+      '<img src="' + cat.icon + '" style="width:60px;height:60px;opacity:0.35;border-radius:50%" />' +
+      '<span class="placeholder-text">Bild folgt</span></div>';
+  }
+
+  document.getElementById('detailStrip').style.background = cat.color;
+  document.getElementById('detailBadgeDot').style.background = cat.color;
+  document.getElementById('detailBadgeText').textContent = cat.label;
+  document.getElementById('detailBadge').style.color = cat.color;
+  document.getElementById('detailTitle').textContent = data.title;
+
+  const subEl = document.getElementById('detailSubtitle');
+  subEl.textContent = data.subtitle || '';
+  subEl.style.display = data.subtitle ? '' : 'none';
+
+  let yearHTML = data.year || '';
+  if (data.status) yearHTML += ' <span class="detail-status ' + data.status + '">' + data.status + '</span>';
+  document.getElementById('detailYear').innerHTML = yearHTML;
+
+  document.getElementById('detailText').textContent = data.description;
+
+  const factsEl = document.getElementById('detailFacts');
+  if (data.facts) {
+    document.getElementById('detailFactsContent').textContent = data.facts;
+    factsEl.style.display = '';
+  } else { factsEl.style.display = 'none'; }
+
+  const partnersEl = document.getElementById('detailPartners');
+  if (data.partners && data.partners.length) {
+    document.getElementById('detailPartnersContent').textContent = data.partners.join(', ');
+    partnersEl.style.display = '';
+  } else { partnersEl.style.display = 'none'; }
+
+  document.getElementById('detailTags').innerHTML =
+    (data.tags || []).map(t => '<span class="tag">' + t + '</span>').join('');
+
+  // Show detail view
+  document.getElementById('sidebar').classList.add('show-detail');
+
+  // Scroll detail to top
+  document.getElementById('detailView').scrollTop = 0;
+
+  // Fly to station
+  map.flyTo([data.lat, data.lng], 16, { duration: 1.2, easeLinearity: 0.25 });
+}
+
+// ── DESELECT ──
+function deselectStation() {
+  if (!selectedStation) return;
+  selectedStation = null;
+
+  document.getElementById('sidebar').classList.remove('show-detail');
+  document.querySelectorAll('.pin-wrap').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.station-card').forEach(c => c.classList.remove('active'));
+
+  // Restore scroll
+  setTimeout(() => {
+    document.getElementById('cardList').scrollTop = cardListScrollTop;
+  }, 50);
+
+  // Fly back to overview
+  map.flyTo(AMBERG, 14, { duration: 0.8 });
+}
+
+document.getElementById('detailBack').addEventListener('click', deselectStation);
+
+// ── SIDEBAR TOGGLE ──
+document.getElementById('sidebarToggle').addEventListener('click', () => {
+  const main = document.getElementById('mainContent');
+  main.classList.toggle('sidebar-hidden');
+  // Leaflet needs a resize event after layout change
+  setTimeout(() => { map.invalidateSize(); }, 400);
+});
+
+// ── GO ──
+init();
+</script>
+</body>
+</html>
