@@ -26,28 +26,33 @@ https://wifam.de
 - Sekundär: Hellgrau #F5EFF8
 - Fonts: Barlow Condensed (Headlines), Barlow (Body)
 
-## Kategorien
+## Kategorien (final)
 | Kategorie | Farbe | Key |
 |-----------|-------|-----|
-| Bauprojekt | #E5007D | bauprojekt |
-| Erschließung | #00A67E | erschliessung |
-| Event | #F59E0B | event |
-| Förderung | #6366F1 | foerderung |
-| Netzwerk | #0EA5E9 | netzwerk |
+| Bauobjekte | #691340 | bauobjekte |
+| Baubetreuung | #5B7BB3 | baubetreuung |
+| Erschließung | #3D8B6E | erschliessung |
+| Ereignisse | #9B59B6 | ereignisse |
+| Projekte | #4a90a4 | projekte |
+| Events | #eb7d27 | events |
 
 ## Dateien
-- `index.html` — Hauptdatei (HTML + CSS + JS), Leaflet-Karte mit 3 Stil-Optionen
-- `data/markers.json` — 12 Marker-Stationen (3 aus Excel, 9 recherchiert)
-- `assets/images/` — 3 Referenzbilder, 9 Stationen noch ohne Bild
+- `v5.html` — Aktuelle Version (Split-Layout, Sidebar, 6 Kategorien, SVG-Icons)
+- `data/markers.json` — 45 Referenzen (32 sichtbar, 13 warten auf Bilder)
+- `assets/images/` — Referenzbilder
+- `assets/icons/` — SVG-Icons (CD-konform, rund)
+- `index.html` — V1 (veraltet)
 - `docs/konzept-kartenloesung.md` — Konzeptpapier mit 3 Optionen für Kunden
-- `WifAm_Referenzen_Erfassung.xlsx` — Original-Erfassungsvorlage vom Kunden
 
 ## Karten-Features
-- Zoombar (Pinch-to-Zoom + Buttons), auf Amberg begrenzt (maxBoundsViscosity: 1.0)
-- 3 Kartenstile umschaltbar: Standard, Elegant, Hell (CSS-Filter auf OSM-Tiles)
-- Filter-Chips nach Kategorie
-- Detail-Panel mit Bild, Beschreibung, Kennzahlen, Partner, Status-Badge
-- Responsive (Desktop + Mobile)
+- Split-Layout: Sidebar links (Kartenliste + Detailansicht), Karte rechts
+- Sidebar ein-/ausklappbar (Toggle-Button)
+- Zoombar (Pinch-to-Zoom + Buttons), auf Amberg begrenzt
+- CartoDB Positron Tiles (zurückhaltend, hell)
+- Filter-Chips mit Haken nach 6 Kategorien
+- Detailansicht mit Bild, Beschreibung, Kennzahlen, Partner, Status-Badge
+- Marker ohne Bild (`visible: false`) werden ausgeblendet
+- Responsive (Desktop + Mobile Bottom-Sheet)
 
 ## Konventionen
 - Kein Framework, kein Build-Step

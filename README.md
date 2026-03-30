@@ -44,7 +44,7 @@ WIFAM/
 
 | Kategorie | Farbe | Anzahl |
 |-----------|-------|--------|
-| Baumassnahme | `#691340` | 19 |
+| Bauobjekte | `#691340` | 19 |
 | Baubetreuung | `#5B7BB3` | 7 |
 | Erschliessung | `#3D8B6E` | 7 |
 | Events | `#eb7d27` | 3 |
