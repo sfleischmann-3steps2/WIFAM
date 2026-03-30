@@ -3,7 +3,7 @@
 Interaktive Referenzkarte fuer das 35-jaehrige Jubilaeum der WIFAM Amberg.
 Touchscreen-Display auf dem Event, danach Integration auf wifam.de.
 
-**Live:** https://sfleischmann-3steps2.github.io/WIFAM/
+**Live:** https://sfleischmann-3steps2.github.io/WIFAM/v5.html
 
 ## Versionen
 
