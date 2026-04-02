@@ -892,7 +892,7 @@ function selectStation(data) {
   document.getElementById('detailView').scrollTop = 0;
 
   // Fly to station
-  map.flyTo([data.lat, data.lng], 16, { duration: 1.2, easeLinearity: 0.25 });
+  map.flyTo([data.lat, data.lng], Math.max(map.getZoom(), 16), { duration: 1.2, easeLinearity: 0.25 });
 }
 
 // ── DESELECT ──
