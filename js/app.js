@@ -22,6 +22,7 @@ let activeFilter = new Set(Object.keys(CATS));
 let leafletMarkers = [];
 let selectedStation = null;
 let cardListScrollTop = 0;
+let lastSelectTime = 0;
 let map;
 
 // ── INIT ──
@@ -180,6 +181,8 @@ function addMarkers() {
 
 // ── MAP CLICK ──
 function onMapClick() {
+  // Guard: ignore map clicks that fire immediately after a marker select (touch event race)
+  if (Date.now() - lastSelectTime < 300) return;
   if (selectedStation) {
     deselectStation();
   }
@@ -192,6 +195,7 @@ function onMapClick() {
 function selectStation(data) {
   const cat = CATS[data.cat] || CATS.bauobjekte;
   selectedStation = data;
+  lastSelectTime = Date.now();
 
   // Save scroll position
   cardListScrollTop = document.getElementById('cardList').scrollTop;
