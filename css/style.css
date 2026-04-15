@@ -617,6 +617,11 @@ header {
     transform: translateY(8%);
   }
 
+  /* ── SAFE AREA for notched devices ── */
+  .sidebar[data-sheet="full"] .detail-view {
+    padding-bottom: env(safe-area-inset-bottom, 0);
+  }
+
   /* ── SIDEBAR HEADER adjustments ── */
   .sidebar-header {
     padding: 0.5rem 1rem 0.5rem;
@@ -651,6 +656,22 @@ header {
     height: 48px !important;
     line-height: 48px !important;
     font-size: 1.4rem !important;
+  }
+
+  /* ── ATTRIBUTION: minimal on mobile ── */
+  .leaflet-control-attribution {
+    font-size: 0 !important;
+    padding: 2px 4px !important;
+    max-width: 30px;
+    overflow: hidden;
+    white-space: nowrap;
+    opacity: 0.5;
+    transition: all 0.2s;
+  }
+  .leaflet-control-attribution:active {
+    font-size: 0.5rem !important;
+    max-width: 300px;
+    opacity: 1;
   }
 
   /* ── WIFAM ECK ── */
