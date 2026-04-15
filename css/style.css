@@ -566,7 +566,8 @@ header {
     left: 0;
     right: 0;
     top: auto;
-    height: auto;
+    height: 100vh;
+    height: 100dvh;
     z-index: 800;
     border-right: none;
     border-top: 1px solid var(--border);

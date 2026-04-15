@@ -35,6 +35,7 @@ async function init() {
     return;
   }
 
+  console.log('[WIFAM v6] Loaded ' + markers.length + ' markers');
   buildFilterChips();
   buildCardList();
 
@@ -193,6 +194,7 @@ function onMapClick() {
 
 // ── SELECT STATION ──
 function selectStation(data) {
+  console.log('[WIFAM v6] selectStation:', data.title, 'mobile:', isMobile());
   const cat = CATS[data.cat] || CATS.bauobjekte;
   selectedStation = data;
   lastSelectTime = Date.now();
