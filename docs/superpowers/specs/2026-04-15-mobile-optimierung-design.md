@@ -111,6 +111,15 @@ Logische Bloecke (kein Modulsystem, kein Build-Step):
 
 Diese koennen spaeter ergaenzt werden, ohne die v6-Architektur aendern zu muessen.
 
+## Deployment & URLs
+
+Beide Versionen muessen parallel auf GitHub Pages erreichbar sein:
+
+- **v5 (Fallback):** `https://sfleischmann-3steps2.github.io/WIFAM/v5.html`
+- **v6 (Neu):** `https://sfleischmann-3steps2.github.io/WIFAM/v6.html`
+
+v6.html referenziert `css/style.css` und `js/app.js` relativ -- funktioniert auf GitHub Pages ohne Konfiguration. Am Ende muss alles gepusht werden, damit beide URLs live sind.
+
 ## Erfolgskriterien
 
 1. v6 funktioniert auf iPhone/Android-Handy: Bottom-Sheet laesst sich fluessig draggen, Stationen oeffnen und schliessen
