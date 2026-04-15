@@ -433,9 +433,75 @@ header {
 }
 .pin-wrap:hover .pin-tooltip { opacity: 1; }
 
-/* Active marker pulse */
+/* Active marker pulse animation */
 .pin-wrap.active .pin-head {
-  box-shadow: 0 0 0 6px rgba(198,0,126,0.2), 0 3px 12px rgba(0,0,0,0.25);
+  box-shadow: 0 0 0 6px rgba(198,0,126,0.3), 0 3px 12px rgba(0,0,0,0.25);
+  animation: marker-pulse 1.5s ease-in-out infinite;
+}
+@keyframes marker-pulse {
+  0%, 100% { box-shadow: 0 0 0 4px rgba(198,0,126,0.3), 0 3px 12px rgba(0,0,0,0.25); }
+  50% { box-shadow: 0 0 0 10px rgba(198,0,126,0.1), 0 3px 12px rgba(0,0,0,0.25); }
+}
+
+/* ── CLUSTER ICONS ── */
+.cluster-icon {
+  width: 36px;
+  height: 36px;
+  background: var(--magenta);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 0.85rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2), 0 0 0 3px rgba(198,0,126,0.2);
+}
+
+/* ── LOADING OVERLAY ── */
+.loading-overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 1500;
+  background: var(--white);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  transition: opacity 0.5s ease;
+}
+.loading-overlay.loaded {
+  opacity: 0;
+  pointer-events: none;
+}
+.loading-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--grey-mid);
+  border-top-color: var(--magenta);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+.loading-text {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.8rem;
+  color: var(--grey-text);
+  font-weight: 500;
+}
+
+/* ── "ALLE" CHIP ── */
+.chip[data-cat="alle"] {
+  font-weight: 700;
+}
+.chip.active[data-cat="alle"] {
+  background: var(--magenta);
+  border-color: var(--magenta);
+  color: white;
 }
 
 /* ── WIFAM-ECK (CD-Gestaltungselement) ── */

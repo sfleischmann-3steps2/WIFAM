@@ -20,6 +20,7 @@ function isMobile() {
 let markers = [];
 let activeFilter = new Set(Object.keys(CATS));
 let leafletMarkers = [];
+let clusterGroup = null;
 let selectedStation = null;
 let cardListScrollTop = 0;
 let lastSelectTime = 0;
@@ -35,7 +36,6 @@ async function init() {
     return;
   }
 
-  console.log('[WIFAM v6] Loaded ' + markers.length + ' markers');
   buildFilterChips();
   buildCardList();
 
@@ -72,6 +72,10 @@ async function init() {
   window.addEventListener('resize', onResize);
 
   addMarkers();
+
+  // Hide loading overlay
+  const overlay = document.getElementById('loadingOverlay');
+  if (overlay) overlay.classList.add('loaded');
 }
 
 // ── FILTER CHIPS ──
@@ -80,6 +84,26 @@ function buildFilterChips() {
   row.innerHTML = '';
   const counts = {};
   markers.filter(m => m.visible !== false).forEach(m => { counts[m.cat] = (counts[m.cat] || 0) + 1; });
+
+  // "Alle" chip
+  const allBtn = document.createElement('button');
+  allBtn.className = 'chip active';
+  allBtn.dataset.cat = 'alle';
+  allBtn.innerHTML = '<svg class="chip-check" viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2.5 6 5 8.5 9.5 3.5"></polyline></svg> Alle';
+  allBtn.addEventListener('click', () => {
+    const allActive = activeFilter.size === Object.keys(counts).length;
+    if (allActive) {
+      activeFilter.clear();
+      row.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+    } else {
+      Object.keys(counts).forEach(k => activeFilter.add(k));
+      row.querySelectorAll('.chip').forEach(c => c.classList.add('active'));
+    }
+    buildCardList();
+    addMarkers();
+    deselectStation();
+  });
+  row.appendChild(allBtn);
 
   Object.entries(CATS).forEach(([key, cfg]) => {
     if (!counts[key]) return;
@@ -92,6 +116,12 @@ function buildFilterChips() {
     btn.addEventListener('click', () => {
       if (activeFilter.has(key)) { activeFilter.delete(key); btn.classList.remove('active'); }
       else { activeFilter.add(key); btn.classList.add('active'); }
+      // Update "Alle" chip state
+      const allChip = row.querySelector('.chip[data-cat="alle"]');
+      if (allChip) {
+        if (activeFilter.size === Object.keys(counts).length) allChip.classList.add('active');
+        else allChip.classList.remove('active');
+      }
       buildCardList();
       addMarkers();
       deselectStation();
@@ -116,6 +146,13 @@ function buildCardList() {
     return;
   }
 
+  // Sort by year (chronological)
+  visible.sort((a, b) => {
+    const yearA = parseInt((a.year || '9999').replace(/[^\d]/g, '')) || 9999;
+    const yearB = parseInt((b.year || '9999').replace(/[^\d]/g, '')) || 9999;
+    return yearA - yearB;
+  });
+
   visible.forEach(data => {
     const cat = CATS[data.cat] || CATS.bauobjekte;
     const card = document.createElement('div');
@@ -131,8 +168,8 @@ function buildCardList() {
       '<div class="card-color-bar" style="background:' + cat.color + '"></div>' +
       '<div class="card-icon"><img src="' + cat.icon + '" alt="" /></div>' +
       '<div class="card-content">' +
-        '<div class="card-title">' + (data.subtitle || data.title) + '</div>' +
-        '<div class="card-subtitle">' + data.title + '</div>' +
+        '<div class="card-title">' + data.title + '</div>' +
+        '<div class="card-subtitle">' + (data.subtitle || '') + (data.year ? ' · ' + data.year : '') + '</div>' +
       '</div>' +
       thumbHTML;
 
@@ -161,8 +198,26 @@ function createIcon(data) {
 }
 
 function addMarkers() {
-  leafletMarkers.forEach(m => map.removeLayer(m.layer));
+  // Remove old markers
+  if (clusterGroup) {
+    map.removeLayer(clusterGroup);
+  }
   leafletMarkers = [];
+
+  clusterGroup = L.markerClusterGroup({
+    maxClusterRadius: 35,
+    spiderfyOnMaxZoom: true,
+    showCoverageOnHover: false,
+    zoomToBoundsOnClick: true,
+    iconCreateFunction: function(cluster) {
+      var count = cluster.getChildCount();
+      return L.divIcon({
+        html: '<div class="cluster-icon">' + count + '</div>',
+        className: '',
+        iconSize: [36, 36]
+      });
+    }
+  });
 
   const visible = markers.filter(m => m.visible !== false && activeFilter.has(m.cat));
 
@@ -170,14 +225,17 @@ function addMarkers() {
     const layer = L.marker([data.lat, data.lng], {
       icon: createIcon(data),
       riseOnHover: true
-    }).addTo(map);
+    });
 
     layer.on('click', (e) => {
       L.DomEvent.stopPropagation(e);
       selectStation(data);
     });
+    clusterGroup.addLayer(layer);
     leafletMarkers.push({ layer, data });
   });
+
+  map.addLayer(clusterGroup);
 }
 
 // ── MAP CLICK ──
@@ -194,7 +252,6 @@ function onMapClick() {
 
 // ── SELECT STATION ──
 function selectStation(data) {
-  console.log('[WIFAM v6] selectStation:', data.title, 'mobile:', isMobile());
   const cat = CATS[data.cat] || CATS.bauobjekte;
   selectedStation = data;
   lastSelectTime = Date.now();
