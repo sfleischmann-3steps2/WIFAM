@@ -505,3 +505,156 @@ header {
   pointer-events: none;
 }
 .counter-pill span { color: var(--magenta); }
+
+/* ══════════════════════════════════════
+   RESPONSIVE – Mobile (< 768px)
+   ══════════════════════════════════════ */
+@media (max-width: 768px) {
+
+  /* ── COMPACT HEADER ── */
+  header {
+    height: 36px;
+    padding: 0 0.75rem;
+  }
+  .brand-logo {
+    height: 28px;
+  }
+  .header-center {
+    position: static;
+    transform: none;
+    margin-left: 0.5rem;
+  }
+  .jubilee-badge {
+    font-size: 0.7rem;
+    padding: 0.1rem 0.4rem;
+  }
+  .jubilee-label,
+  .header-right {
+    display: none;
+  }
+
+  /* ── BAND: hidden on mobile ── */
+  .das-band {
+    display: none;
+  }
+
+  /* ── APP LAYOUT: map takes full screen ── */
+  .app {
+    grid-template-rows: auto 1fr;
+  }
+
+  /* ── MAIN: single column, map fills space ── */
+  .main-content {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    position: relative;
+  }
+  .map-container {
+    grid-row: 1;
+    grid-column: 1;
+  }
+
+  /* ── SIDEBAR TOGGLE: hidden on mobile ── */
+  .sidebar-toggle {
+    display: none;
+  }
+
+  /* ── SIDEBAR as BOTTOM SHEET ── */
+  .sidebar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: auto;
+    height: auto;
+    z-index: 800;
+    border-right: none;
+    border-top: 1px solid var(--border);
+    border-radius: 16px 16px 0 0;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.12);
+    transform: translateY(0);
+    will-change: transform;
+    transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+    overflow: hidden;
+  }
+  .sidebar.dragging {
+    transition: none;
+  }
+
+  /* ── DRAG HANDLE ── */
+  .drag-handle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 0 4px;
+    cursor: grab;
+    touch-action: none;
+    flex-shrink: 0;
+  }
+  .drag-handle-bar {
+    width: 36px;
+    height: 4px;
+    background: var(--grey-mid);
+    border-radius: 2px;
+  }
+
+  /* ── SHEET STATES (controlled via data-sheet attribute) ── */
+  .sidebar[data-sheet="peek"] {
+    transform: translateY(calc(100% - 80px));
+  }
+  .sidebar[data-sheet="peek"] .filter-row,
+  .sidebar[data-sheet="peek"] .onboarding-hint,
+  .sidebar[data-sheet="peek"] .sidebar-views {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .sidebar[data-sheet="half"] {
+    transform: translateY(55%);
+  }
+
+  .sidebar[data-sheet="full"] {
+    transform: translateY(8%);
+  }
+
+  /* ── SIDEBAR HEADER adjustments ── */
+  .sidebar-header {
+    padding: 0.5rem 1rem 0.5rem;
+  }
+
+  /* ── SIDEBAR VIEWS: fill remaining space ── */
+  .sidebar-views {
+    height: calc(100vh - 36px);
+    overflow: hidden;
+  }
+  .card-list-view,
+  .detail-view {
+    height: 100%;
+  }
+
+  /* ── FILTER CHIPS: larger touch targets ── */
+  .chip {
+    min-height: 44px;
+    padding: 0.5rem 0.9rem;
+    font-size: 0.72rem;
+  }
+
+  /* ── DETAIL BACK: larger tap area ── */
+  .detail-back {
+    min-height: 44px;
+    padding: 1rem;
+  }
+
+  /* ── ZOOM CONTROLS: larger, left side ── */
+  .leaflet-control-zoom a {
+    width: 48px !important;
+    height: 48px !important;
+    line-height: 48px !important;
+    font-size: 1.4rem !important;
+  }
+
+  /* ── WIFAM ECK ── */
+  .wifam-eck {
+    border-width: 0 0 80px 80px;
+  }
+}
