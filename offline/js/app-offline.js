@@ -279,8 +279,8 @@ const MARKERS_DATA = [
     "year": "2011 / 2017",
     "status": "abgeschlossen",
     "facts": "Gebäude F (Kaiser-Wilhelm-Ring 23a): ca. 570 m². Gebäude A (23b): ca. 550 m². Nutzer: Ife, KWK, ATC, Hudson, IAF, OTH Geoinformatik",
-    "image": null,
-    "visible": false
+    "image": "assets/images/18 -Gebäude A OTH.JPG",
+    "visible": true
   },
   {
     "id": 19,
@@ -369,8 +369,8 @@ const MARKERS_DATA = [
     "year": "2014",
     "status": "abgeschlossen",
     "facts": "Kino + Parkpalette mit rund 100 Stellplätzen",
-    "image": null,
-    "visible": false
+    "image": "assets/images/24 - Cineplex.jpeg",
+    "visible": true
   },
   {
     "id": 25,
@@ -384,8 +384,8 @@ const MARKERS_DATA = [
     "year": "2010er",
     "status": "abgeschlossen",
     "facts": "Kostenkontrolle, EU-weite Ausschreibungen, Generalsanierung in 4 Bauabschnitten",
-    "image": null,
-    "visible": false
+    "image": "assets/images/25 - Realschule.JPG",
+    "visible": true
   },
   {
     "id": 26,
@@ -429,8 +429,8 @@ const MARKERS_DATA = [
     "year": "1990er",
     "status": "abgeschlossen",
     "facts": "ca. 20 gewerbliche Parzellen",
-    "image": null,
-    "visible": false
+    "image": "assets/images/28 - GG Gailoh.JPG",
+    "visible": true
   },
   {
     "id": 29,
@@ -444,8 +444,8 @@ const MARKERS_DATA = [
     "year": "1990er-2010er",
     "status": "abgeschlossen",
     "facts": "Geschätzte Kosten ca. 20 Mio. Euro",
-    "image": null,
-    "visible": false
+    "image": "assets/images/29 - Dekontamination BMG.JPG",
+    "visible": true
   },
   {
     "id": 30,
@@ -459,8 +459,8 @@ const MARKERS_DATA = [
     "year": "1990er-2000er",
     "status": "abgeschlossen",
     "facts": "Angesiedelte Firmen: z. B. Forum-Plast, AMA, Auer Guss, Herding Filtertechnik, Kerb Konus, Emerson, Jokiel, PIA Automation, Moedel Werk II, Fa. Bieda",
-    "image": null,
-    "visible": false
+    "image": "assets/images/30 - IG Nord.JPG",
+    "visible": true
   },
   {
     "id": 31,
@@ -504,8 +504,8 @@ const MARKERS_DATA = [
     "year": "2000er",
     "status": "abgeschlossen",
     "facts": "Rund 200 Stellplätze",
-    "image": null,
-    "visible": false
+    "image": "assets/images/33 - ACC - 2020 (1).JPG",
+    "visible": true
   },
   {
     "id": 34,
