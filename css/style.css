@@ -306,9 +306,12 @@ header {
 .detail-badge-dot { width: 7px; height: 7px; border-radius: 50%; }
 .detail-title {
   font-family: 'Montserrat', sans-serif;
-  font-weight: 800; font-size: 1.4rem; line-height: 1.15;
+  font-weight: 800; font-size: clamp(1rem, 3.5vw, 1.4rem); line-height: 1.15;
   color: var(--black); text-transform: uppercase;
   letter-spacing: 0.04em; margin-bottom: 0.1rem;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
 }
 .detail-subtitle {
   font-size: 0.82rem; color: var(--grey-text); margin-bottom: 0.2rem;
@@ -683,6 +686,42 @@ header {
   .header-right {
     display: none;
   }
+
+  /* ── FILTER ACCORDION (tablet portrait) ── */
+  .filter-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.5rem 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: var(--grey-text);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .filter-toggle-label { flex-shrink: 0; }
+  .filter-toggle-dots {
+    display: flex; gap: 4px; align-items: center; flex: 1;
+  }
+  .filter-toggle-dot {
+    width: 8px; height: 8px; border-radius: 50%; transition: opacity 0.2s;
+  }
+  .filter-toggle-dot.inactive { opacity: 0.25; }
+  .filter-toggle-chevron {
+    width: 16px; height: 16px; flex-shrink: 0;
+    transition: transform 0.25s ease; color: var(--grey-text);
+  }
+  .filter-wrap.open .filter-toggle-chevron { transform: rotate(180deg); }
+  .filter-wrap .filter-row {
+    max-height: 0; overflow: hidden; opacity: 0;
+    transition: max-height 0.3s ease, opacity 0.2s ease;
+  }
+  .filter-wrap.open .filter-row { max-height: 200px; opacity: 1; }
 }
 
 /* ══════════════════════════════════════
