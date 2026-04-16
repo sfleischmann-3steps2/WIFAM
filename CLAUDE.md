@@ -4,7 +4,7 @@
 Interaktive Stadtkarte für das 35-jährige Jubiläum der WIFAM Amberg.
 Touchscreen-Display auf dem Event, danach Integration auf wifam.de.
 
-**Live:** https://sfleischmann-3steps2.github.io/WIFAM/v5.html
+**Live:** https://sfleischmann-3steps2.github.io/WIFAM/
 **Status:** MVP live, wartet auf Kunden-Feedback
 
 ## Kunde
@@ -37,11 +37,11 @@ https://wifam.de
 | Events | #eb7d27 | events |
 
 ## Dateien
-- `v5.html` — Aktuelle Version (Split-Layout, Sidebar, 6 Kategorien, SVG-Icons)
-- `data/markers.json` — 45 Referenzen (32 sichtbar, 13 warten auf Bilder)
+- `index.html` — Aktuelle Version (= v6, Split-Layout, Sidebar, 6 Kategorien, SVG-Icons)
+- `data/markers.json` — 45 Referenzen (39 sichtbar, 6 warten auf Bilder)
 - `assets/images/` — Referenzbilder
 - `assets/icons/` — SVG-Icons (CD-konform, rund)
-- `index.html` — V1 (veraltet)
+- `offline/` — Offline-Version für USB-Stick (kein Internet nötig)
 - `docs/konzept-kartenloesung.md` — Konzeptpapier mit 3 Optionen für Kunden
 
 ## Karten-Features
