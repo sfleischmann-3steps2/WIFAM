@@ -102,6 +102,7 @@ function buildFilterChips() {
     buildCardList();
     addMarkers();
     deselectStation();
+    updateFilterDots();
   });
   row.appendChild(allBtn);
 
@@ -125,8 +126,37 @@ function buildFilterChips() {
       buildCardList();
       addMarkers();
       deselectStation();
+      updateFilterDots();
     });
     row.appendChild(btn);
+  });
+
+  initFilterToggle();
+  updateFilterDots();
+}
+
+// ── FILTER TOGGLE (mobile accordion) ──
+function initFilterToggle() {
+  const toggle = document.getElementById('filterToggle');
+  const wrap = document.getElementById('filterWrap');
+  if (!toggle || !wrap) return;
+
+  toggle.addEventListener('click', () => {
+    wrap.classList.toggle('open');
+  });
+}
+
+function updateFilterDots() {
+  const dotsContainer = document.getElementById('filterToggleDots');
+  if (!dotsContainer) return;
+
+  dotsContainer.innerHTML = '';
+  Object.entries(CATS).forEach(([key, cfg]) => {
+    const dot = document.createElement('span');
+    dot.className = 'filter-toggle-dot';
+    dot.style.background = cfg.color;
+    if (!activeFilter.has(key)) dot.classList.add('inactive');
+    dotsContainer.appendChild(dot);
   });
 }
 
