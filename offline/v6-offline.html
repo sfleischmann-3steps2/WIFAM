@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <meta name="robots" content="noindex" />
+  <title>WIFAM – 35 Jahre Wirtschaftsförderung Amberg</title>
+
+  <link rel="stylesheet" href="lib/leaflet.min.css" />
+  <link rel="stylesheet" href="lib/MarkerCluster.css" />
+  <link rel="stylesheet" href="lib/MarkerCluster.Default.css" />
+  <script src="lib/leaflet.min.js"></script>
+  <script src="lib/leaflet.markercluster.js"></script>
+  <link rel="stylesheet" href="lib/montserrat.css" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+<div class="app">
+
+  <!-- HEADER -->
+  <header>
+    <img src="assets/images/wifam-logo.webp" alt="WifAm - Wirtschaftsförderung Amberg" class="brand-logo" />
+    <div class="header-center">
+      <div class="jubilee-badge">35 JAHRE</div>
+      <div class="jubilee-label">Unsere Spuren<br>in Amberg</div>
+    </div>
+    <div class="header-right">
+      Amberg &amp; Region<br>
+      <strong style="color:var(--magenta)">1991 - 2026</strong>
+    </div>
+  </header>
+
+  <!-- DAS BAND - CD-Gestaltungselement -->
+  <div class="das-band">
+    <svg viewBox="0 0 1200 34" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M-10,28 C150,8 300,32 500,16 C700,0 900,30 1210,12"
+            stroke="#c6007e" stroke-width="5" fill="none"
+            opacity="0.55" stroke-linecap="round" />
+      <path d="M-10,22 C200,34 400,6 600,22 C800,38 1000,8 1210,20"
+            stroke="#c6007e" stroke-width="3" fill="none"
+            opacity="0.35" stroke-linecap="round" />
+    </svg>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main-content" id="mainContent">
+
+    <!-- SIDEBAR / BOTTOM-SHEET -->
+    <div class="sidebar" id="sidebar">
+      <!-- Drag handle (mobile only, visible via CSS) -->
+      <div class="drag-handle" id="dragHandle">
+        <div class="drag-handle-bar"></div>
+      </div>
+
+      <div class="sidebar-header">
+        <div class="sidebar-title">35 Jahre: Unsere Stationen</div>
+        <div class="sidebar-subtitle">
+          <span class="counter-pill"><span id="counterNum">0</span> Stationen</span>
+        </div>
+        <div class="onboarding-hint" id="onboardingHint">Tippen Sie auf eine Station, um mehr zu erfahren</div>
+        <div class="filter-row" id="filterRow"></div>
+      </div>
+
+      <div class="sidebar-views">
+        <!-- Card List -->
+        <div class="card-list-view" id="cardList"></div>
+
+        <!-- Detail -->
+        <div class="detail-view" id="detailView">
+          <div class="detail-back" id="detailBack">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            Alle Stationen
+          </div>
+          <div id="detailImgWrap"></div>
+          <div class="detail-cat-strip" id="detailStrip"></div>
+          <div class="detail-body">
+            <div class="detail-badge" id="detailBadge">
+              <div class="detail-badge-dot" id="detailBadgeDot"></div>
+              <span id="detailBadgeText"></span>
+            </div>
+            <h2 class="detail-title" id="detailTitle"></h2>
+            <div class="detail-subtitle" id="detailSubtitle"></div>
+            <div class="detail-year" id="detailYear"></div>
+            <div class="detail-divider"></div>
+            <p class="detail-text" id="detailText"></p>
+            <div class="detail-facts" id="detailFacts" style="display:none">
+              <div class="detail-section-label">Kennzahlen</div>
+              <div id="detailFactsContent"></div>
+            </div>
+            <div class="detail-partners" id="detailPartners" style="display:none">
+              <div class="detail-section-label">Partner</div>
+              <div id="detailPartnersContent"></div>
+            </div>
+            <div class="detail-tags" id="detailTags"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SIDEBAR TOGGLE (desktop only, hidden on mobile via CSS) -->
+    <button class="sidebar-toggle" id="sidebarToggle" title="Sidebar ein-/ausblenden">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+    </button>
+
+    <!-- MAP -->
+    <div class="map-container">
+      <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Karte wird geladen...</div>
+      </div>
+      <div id="map"></div>
+      <!-- WIFAM Eck -->
+      <div class="wifam-eck"></div>
+    </div>
+  </div>
+
+</div>
+
+<script src="js/app-offline.js"></script>
+</body>
+</html>
